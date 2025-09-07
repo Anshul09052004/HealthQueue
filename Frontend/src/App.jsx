@@ -8,11 +8,13 @@ import Contact from './Pages/Contact'
 import MyProfile from './Pages/MyProfile'
 import MyAppoinment from './Pages/MyAppoinment'
 import Appoinments from './Pages/Appoinments'
+import Navbar from './Components/Navbar'
 
 function App() {
 
   return (
     <>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/doctors" element={<Doctors />} />
