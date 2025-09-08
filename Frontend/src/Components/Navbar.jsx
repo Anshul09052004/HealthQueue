@@ -15,9 +15,9 @@ function Navbar() {
     return (
         <div className="text-white w-full">
             {/* Navbar */}
-            <nav className="relative h-[80px] flex items-center justify-between  px-4 md:px-16 lg:px-24 xl:px-32 bg-white text-gray-900 transition-all ">
+            <nav className="mt-5 relative h-[45px] flex items-center justify-between  px-4 md:px-16 lg:px-24 xl:px-32 bg-white text-gray-900 transition-all ">
                 {/* Logo */}
-                <img src={logo} alt="Logo" className=" w-[200px] md:w-[300px] relative z-10 bg-white" />
+                <img src={logo} alt="Logo" className=" w-[154px] md:w-[150px] relative z-10 bg-white" />
 
                 {/* Desktop Menu */}
                 <ul className="text-lg hidden md:flex items-center space-x-8 md:pl-28">
