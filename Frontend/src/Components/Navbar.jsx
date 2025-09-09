@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "../Assets/logo.png";
 import profilepic from "../Assets/profile_pic.png";
 import dropdownicon from "../Assets/dropdown_icon.svg";
+import { Link } from "react-router-dom";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -21,24 +22,33 @@ function Navbar() {
 
                 {/* Desktop Menu */}
                 <ul className="text-lg hidden md:flex items-center space-x-8 md:pl-28">
-                    {["Home", "All Doctors", "About", "Contact"].map((item) => (
-                        <li
-                            key={item}
-                            className="flex flex-col items-center cursor-pointer"
-                            onClick={() => setActive(item)}
-                        >
-                            <a
-                                href="#"
-                                className={`transition ${active === item ? "text-blue-600" : "hover:text-blue-600"
-                                    }`}
+                    {["Home", "All Doctors", "About", "Contact"].map((item) => {
+                        const routes = {
+                            Home: "/",
+                            "All Doctors": "/doctors",
+                            About: "/about",
+                            Contact: "/contact",
+                        };
+
+                        return (
+                            <li
+                                key={item}
+                                className="flex flex-col items-center cursor-pointer"
+                                onClick={() => setActive(item)}
                             >
-                                {item}
-                            </a>
-                            {active === item && (
-                                <hr className="w-6 border-t-2 border-blue-600 mt-1 transition-all" />
-                            )}
-                        </li>
-                    ))}
+                                <Link
+                                    to={routes[item]}
+                                    className={`transition ${active === item ? "text-blue-600" : "hover:text-blue-600"
+                                        }`}
+                                >
+                                    {item}
+                                </Link>
+                                {active === item && (
+                                    <hr className="w-6 border-t-2 border-blue-600 mt-1 transition-all" />
+                                )}
+                            </li>
+                        );
+                    })}
                 </ul>
 
                 {/* Desktop Right Side */}
@@ -163,40 +173,40 @@ function Navbar() {
                     <div className="mobile-menu absolute top-[80px] left-0 w-full bg-white shadow-sm p-6 md:hidden z-40">
                         <ul className="flex flex-col space-y-4 text-lg">
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                  to={"/"}
                                     className="text-sm"
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     Home
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                   to={"/doctors"}
                                     className="text-sm"
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     All Doctors
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                   to={"/about"}
                                     className="text-sm"
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     About
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a
-                                    href="#"
+                                <Link
+                                  to={"/contact"}
                                     className="text-sm"
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     Contact
-                                </a>
+                                </Link>
                             </li>
                         </ul>
 
