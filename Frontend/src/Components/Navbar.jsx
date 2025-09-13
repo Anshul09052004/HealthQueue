@@ -71,7 +71,7 @@ function Navbar() {
                             <div className="absolute top-12 right-0 bg-white text-gray-800 shadow-md rounded-md py-2 w-40">
                                 <p
                                     className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={() => navigate("/profile")}
+                                    onClick={() => navigate("/myprofile")}
                                 >
                                     My Profile
                                 </p>
@@ -124,7 +124,7 @@ function Navbar() {
                                     <p
                                         className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                         onClick={() => {
-                                            navigate("/profile");
+                                            navigate("/myprofile");
                                             setIsDropdownOpen(false);
                                         }}
                                     >
