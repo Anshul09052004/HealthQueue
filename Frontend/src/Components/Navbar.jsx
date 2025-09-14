@@ -77,7 +77,7 @@ function Navbar() {
                                 </p>
                                 <p
                                     className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                    onClick={() => navigate("/appointments")}
+                                    onClick={() => navigate("/my-appoinment")}
                                 >
                                     My Appointments
                                 </p>
@@ -133,7 +133,7 @@ function Navbar() {
                                     <p
                                         className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                         onClick={() => {
-                                            navigate("/appointments");
+                                            navigate("/my-appoinment");
                                             setIsDropdownOpen(false);
                                         }}
                                     >
