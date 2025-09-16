@@ -1,0 +1,52 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Coverage directory (if using testing tools like Jest)
+coverage/
+.nyc_output/
+
+# Build / dist
+dist/
+build/
+tmp/
+temp/
+
+# Debug files
+*.tgz
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.iml
+
+# Optional: TypeScript cache (if you use TS)
+*.tsbuildinfo
+
+# Optional: Docker stuff
+.dockerignore
+docker-compose.override.yml

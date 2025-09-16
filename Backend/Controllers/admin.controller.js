@@ -1,0 +1,53 @@
+import bcrypt from "bcrypt";
+import validator from "validator";
+import Doctor from "../models/doctor.model.js";
+import {cloudinary} from "../Utils/Cloudinary.js";
+
+const addDoctor = async (req, res, next) => {
+  try {
+    const { name, email, password, speciality, degree, experience, about, fees} = req.body;
+    const imageFile = req.file;
+
+    if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: "Please enter a valid email" });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters long" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
+      resource_type: "image"
+    });
+
+    const imageURL = imageUpload.secure_url;
+
+    const doctor = await Doctor.create({
+      name,
+      email,
+      password: hashedPassword,
+      speciality,
+      degree,
+      experience,
+      about,
+      fees,
+      image: imageURL
+    });
+
+    res.status(201).json({
+      message: "Doctor added successfully",
+      doctor
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+export { addDoctor };
