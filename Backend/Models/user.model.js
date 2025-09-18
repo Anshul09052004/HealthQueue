@@ -9,20 +9,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        validate: [isEmail, "Please enter a valid email"],
     },
     password: {
         type: String,
         required: true,
     },
     image: {
-          public_id: {
-            type: String,
-            required: false,
-        },
-        secure_url: {
-            type: String,
-        }
+        type: String,
+        required: false
     },
     gender: {
         type: String,
@@ -35,16 +29,6 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         default: "0000000000",
-    },
-    address: {
-        line1: {
-            type: object,
-           
-        },
-        line2: {
-            type: String,
-            
-        },
     },
 
 });

@@ -1,11 +1,12 @@
 import bcrypt from "bcrypt";
 import validator from "validator";
 import Doctor from "../models/doctor.model.js";
-import {cloudinary} from "../Utils/Cloudinary.js";
+import { cloudinary } from "../Utils/Cloudinary.js";
+import jwt from "jsonwebtoken";
 
 const addDoctor = async (req, res, next) => {
   try {
-    const { name, email, password, speciality, degree, experience, about, fees} = req.body;
+    const { name, email, password, speciality, degree, experience, about, fees } = req.body;
     const imageFile = req.file;
 
     if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees) {
@@ -50,4 +51,20 @@ const addDoctor = async (req, res, next) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-export { addDoctor };
+
+const adminLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+      const token = jwt.sign(email + password, process.env.JWT_SECRET);
+      res.status(200).json({ success: true, token });
+    } else {
+      res.status(401).json({ success: false, message: "Invalid credentials" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+};
+
+export { addDoctor, adminLogin };
