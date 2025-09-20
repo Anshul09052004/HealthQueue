@@ -32,7 +32,7 @@ function MyAppoinment() {
               <p className="text-sm text-blue-600 font-medium">
                 {item.speciality}
               </p>
-              <p className="text-gray-500 text-sm mt-1">{item.address.line1}</p>
+           
               <p className="text-sm mt-2">
                 <span className="font-medium text-gray-700">Date & Time:</span>{" "}
                 <span className="text-gray-800">23, July, 2025</span>

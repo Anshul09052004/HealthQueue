@@ -3,6 +3,8 @@ import connectDb from './Db/index.js';
 import cors from 'cors';
 import adminRoutes from './Routes/admin.routes.js';
 import connectCloudinary from './Utils/Cloudinary.js';
+import doctorRoutes from './Routes/doctor.routes.js';
+import userRoutes from './Routes/user.routes.js';
 
 const app = express();
 connectDb();
@@ -21,7 +23,8 @@ app.get('/', (req, res) => {
   res.send("server running successfully");
 });
 
-// app.use('/api/v1/user', userRoutes);
+app.use('/api/v1/anshul', doctorRoutes);
 app.use('/api/v1/doctor', adminRoutes);
+app.use('/api/v1/user', userRoutes);
 
 export default app;

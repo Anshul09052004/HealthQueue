@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import validator from "validator";
-import Doctor from "../models/doctor.model.js";
+import Doctor from "../Models/doctor.model.js";
 import { cloudinary } from "../Utils/Cloudinary.js";
 import jwt from "jsonwebtoken";
 
@@ -67,4 +67,15 @@ const adminLogin = async (req, res) => {
   }
 };
 
-export { addDoctor, adminLogin };
+const allDoctors = async (req, res) => {
+  try {
+  const doctors = await Doctor.find({}).select("-password");
+
+    res.status(200).json({ success: true, doctors });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
+};
+
+export { addDoctor, adminLogin,allDoctors };

@@ -1,13 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../Context/AppContextProvider";
+import axios from "axios";
 
 function LoginSignup() {
+  const { backendUrl, token, setToken } = useContext(AppContext);
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      const { name, email, password } = formData;
+
+      if (state === "SignUp") {
+        const { data } = await axios.post(backendUrl + "/api/v1/user/register", {
+          name,
+          email,
+          password,
+        });
+        if (data.token) {
+          console.log("Signup response:", data);
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
+          toast.success("Signup successful!");
+        } else {
+          console.log("Signup failed:", data);
+          toast.error("Signup failed!");
+        }
+      } else {
+        const { data } = await axios.post(backendUrl + "/api/v1/user/login", {
+          email,
+          password,
+        });
+        if (data.token) {
+          console.log("Login response:", data);
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
+          toast.success("Login successful!");
+        } else {
+          console.log("Login failed:", data);
+          toast.error("Login failed!");
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
+
   const navigate = useNavigate();
-  const [state, setState] = useState("Login"); // "Login" or "SignUp"
+  const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     password: "",
   });
@@ -18,71 +64,11 @@ function LoginSignup() {
       [e.target.name]: e.target.value,
     });
   };
-
-  // ✅ Signup
-  const SignUp = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/api/v1/user/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        toast.error(data.message || "Signup failed");
-        return;
-      }
-
-      toast.success("Signup Successful!");
-      setTimeout(() => {
-        setState("Login");
-        navigate("/login");
-      }, 1500);
-    } catch (error) {
-      toast.error("Network error during signup");
+  useEffect(() => {
+    if (token) {
+      navigate("/");
     }
-  };
-
-  // ✅ Login
-  const Login = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:5000/api/v1/user/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        toast.error(data.message || "Login failed");
-        return;
-      }
-
-      toast.success("Login Successful!");
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        // 👇 Navbar ko turant update karne ke liye
-        window.dispatchEvent(new Event("storage"));
-      }
-
-      setTimeout(() => navigate("/shop"), 1500);
-    } catch (error) {
-      toast.error("Network error during login");
-    }
-  };
-
-  const submitHandler = (e) => {
-    if (state === "SignUp") {
-      SignUp(e);
-    } else {
-      Login(e);
-    }
-  };
+  }, [token]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
@@ -101,8 +87,8 @@ function LoginSignup() {
 
         {state === "SignUp" && (
           <input
-            name="fullName"
-            value={formData.fullName || ""}
+            name="name"
+            value={formData.name || ""}
             onChange={changeHandler}
             className="w-full border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-300 bg-gray-50 mb-4 outline-none rounded-lg py-3 px-4 transition"
             type="text"
