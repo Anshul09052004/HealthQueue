@@ -2,13 +2,13 @@ import React, { useState, useContext } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../Assets/logo.png";
-import profilepic from "../Assets/profile_pic.png";
 import dropdownicon from "../Assets/dropdown_icon.svg";
 import { AppContext } from "../Context/AppContextProvider";
+import uplaodarea from "../Assets/upload_area.png";
 
 function Navbar() {
   const navigate = useNavigate();
-  const { token, setToken } = useContext(AppContext);
+  const { token, setToken, userData } = useContext(AppContext); // userData added
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [active, setActive] = useState("Home");
@@ -69,7 +69,11 @@ function Navbar() {
               className="flex items-center space-x-2"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
-              <img src={profilepic} alt="Profile" className="w-10 h-10 rounded-full" />
+              <img
+                src={userData?.image || uplaodarea} // use uploaded image
+                alt="Profile"
+                className="w-10 h-10 rounded-full"
+              />
               <img src={dropdownicon} alt="Dropdown" className="w-3" />
             </button>
 
@@ -118,7 +122,7 @@ function Navbar() {
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 <img
-                  src={profilepic}
+                  src={userData?.image || uplaodarea} // mobile view
                   alt="Profile"
                   className="w-9 h-9 rounded-full border"
                 />

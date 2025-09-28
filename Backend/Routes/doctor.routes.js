@@ -2,5 +2,8 @@ import { Router } from "express";
 import { doctorList } from "../Controllers/doctor.controller.js";
 
 const router = Router();
-router.post('/list', doctorList);
+
+// GET request for fetching doctors
+router.get("/list", doctorList);
+
 export default router;

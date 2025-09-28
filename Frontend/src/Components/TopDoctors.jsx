@@ -1,12 +1,10 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { AppContext } from "../Context/AppContextProvider";
-
 import { useNavigate } from "react-router-dom";
 
 function TopDoctors() {
     const navigate = useNavigate();
-    const {doctors} = useContext(AppContext);
+    const { doctors } = useContext(AppContext);
 
     return (
         <section className="py-16 px-6 md:px-20 bg-gradient-to-b from-gray-50 to-white">
@@ -24,7 +22,7 @@ function TopDoctors() {
 
             {/* Doctors Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10 max-w-7xl mx-auto">
-                {doctors.slice(0, 10).map((item, index) => (
+                {(doctors || []).slice(0, 10).map((item, index) => (
                     <div
                         key={index}
                         className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6 flex flex-col items-center text-center border border-gray-100 hover:-translate-y-2"
@@ -32,7 +30,7 @@ function TopDoctors() {
                         {/* Doctor Image */}
                         <div className="relative">
                             <img
-                                src={item.image}
+                                src={item.image || "/default_profile.png"}
                                 alt={item.name}
                                 className="h-24 w-24 object-cover rounded-full border-4 border-blue-100 shadow-sm"
                             />
