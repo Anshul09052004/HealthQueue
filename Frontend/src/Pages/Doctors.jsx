@@ -6,11 +6,17 @@ function Doctors() {
   const navigate = useNavigate();
   const { doctors } = useContext(AppContext);
   const { speciality } = useParams();
+  const decodedSpeciality = speciality ? decodeURIComponent(speciality) : null;
   const [FilterDoc, setFilterDoc] = useState([]);
 
   const appllyFilter = () => {
-    if (speciality) {
-      setFilterDoc(doctors.filter((doctor) => doctor.speciality === speciality));
+    if (decodedSpeciality) {
+      setFilterDoc(
+        doctors.filter(
+          (doctor) =>
+            doctor.speciality.toLowerCase() === decodedSpeciality.toLowerCase()
+        )
+      );
     } else {
       setFilterDoc(doctors);
     }
@@ -18,13 +24,13 @@ function Doctors() {
 
   useEffect(() => {
     appllyFilter();
-  }, [speciality, doctors]);
+  }, [decodedSpeciality, doctors]);
 
   const specialities = [
     "General physician",
     "Gynecologist",
     "Dermatologist",
-    "Pediatricians",
+    "Pediatrician",
     "Neurologist",
     "Gastroenterologist",
   ];
@@ -47,13 +53,15 @@ function Doctors() {
           <p
             key={index}
             onClick={() =>
-              speciality === spec ? navigate("/doctors") : navigate(`/doctors/${spec}`)
+              decodedSpeciality === spec
+                ? navigate("/doctors")
+                : navigate(`/doctors/${encodeURIComponent(spec)}`)
             }
             className={`flex-shrink-0 px-4 sm:px-6 py-2 sm:py-2.5 border rounded-full 
               text-sm sm:text-base font-medium cursor-pointer 
               transition-all duration-300 transform hover:scale-105
               ${
-                speciality === spec
+                decodedSpeciality === spec
                   ? "bg-blue-600 text-white border-blue-600 shadow-md"
                   : "bg-white text-blue-600 border-blue-300 shadow-sm hover:bg-blue-600 hover:text-white"
               }`}
