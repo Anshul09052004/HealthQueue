@@ -37,7 +37,7 @@ function AddDoctors() {
         formData.append("image", docImg);
 
         try {
-            const { data } = await axios.post(backendUrl + "/api/v1/doctor/add-doctor", formData, { headers: { token: aToken } });
+            const { data } = await axios.post(backendUrl + "/api/v1/admin/add-doctor", formData, { headers: { token: aToken } });
            
             if (data.success) {
                 toast.success("Doctor added successfully");

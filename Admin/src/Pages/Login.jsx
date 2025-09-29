@@ -14,7 +14,7 @@ function Login() {
         event.preventDefault();
         try {
             if (state === "Admin") {
-                const { data } = await axios.post(backendUrl + "/api/v1/doctor/login", {
+                const { data } = await axios.post(backendUrl + "/api/v1/admin/login", {
                     email,
                     password
                 })

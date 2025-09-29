@@ -28,8 +28,8 @@ app.get('/', (req, res) => {
   res.send("server running successfully");
 });
 
-app.use('/api/v1/anshul', doctorRoutes);
-app.use('/api/v1/doctor', adminRoutes);
+app.use('/api/v1/doctor', doctorRoutes);
+app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/user', userRoutes);
 
 export default app;
