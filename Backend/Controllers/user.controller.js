@@ -157,7 +157,7 @@ const bookAppoinment = async (req, res) => {
         if (!docData) {
             return res.status(404).json({ success: false, message: "Doctor not found" });
         }
-    
+
 
         // Initialize slots_booked if undefined
         let slots_booked = docData.slots_booked || {};
@@ -194,10 +194,37 @@ const bookAppoinment = async (req, res) => {
         res.status(200).json({ success: true, message: "Appointment booked successfully", newAppoinment });
 
     } catch (error) {
-        console.error(error); // log actual error
+        console.error(error);
         res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
 };
 
+const listAppointment = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const appoinments = await Appointment.find({ userId });
+        res.status(200).json({ success: true, appoinments });
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppoinment };
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+}
+const cancelAppointment = async (req, res) => {
+    try {
+        const { appointmentId } = req.body;
+        const userId = req.user.id;
+        const appointmentData = await Appointment.findById(appointmentId);
+        if (appointmentData.userId !== userId) {
+            return res.status(403).json({ success: false, message: "Unauthorized action" });
+        }
+        await Appointment.findByIdAndUpdate(appointmentId, { cancelled: true });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+}
+
+
+export { registerUser, loginUser, getProfile, updateProfile, bookAppoinment, listAppointment, cancelAppointment };
