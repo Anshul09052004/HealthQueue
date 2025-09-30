@@ -67,7 +67,7 @@ function Navbar() {
               <img
                 src={userData?.image || uplaodarea}
                 alt="Profile"
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full cursor-pointer border border-gray-100 object-cover"
               />
               <img src={dropdownicon} alt="Dropdown" className="w-3" />
             </button>

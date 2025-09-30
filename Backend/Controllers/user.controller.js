@@ -7,6 +7,7 @@ import path from "path";
 import fs from "fs";
 import Doctor from "../Models/doctor.model.js";
 import Appointment from "../Models/appoinment.model.js"
+import Razorpay from "razorpay";
 
 const registerUser = async (req, res) => {
     try {
@@ -225,6 +226,48 @@ const cancelAppointment = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
 }
+const razorpayInstance = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
+});
+const paymentRazorpay = async (req, res) => {
+    try {
+        const { appointmentId } = req.body;
+        const appointmentData = await Appointment.findById(appointmentId);
+        if (!appointmentData || appointmentData.cancelled) {
+            return res.status(404).json({ success: false, message: "Appointment not found" });
+        }
+        const options = {
+            amount: appointmentData.amount * 100,
+            currency: process.env.CURRENCY,
+            receipt: appointmentId
+        };
+        const order = await razorpayInstance.orders.create(options);
+        res.status(200).json({ success: true, order });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+}
+const verifyRazorpay = async (req, res) => {
+    try {
+        const { razorpay_order_id } = req.body;
+        const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+        if (orderInfo.status === 'paid') {
+            await Appointment.findByIdAndUpdate(orderInfo.receipt, { payment: true });
+            return res.status(200).json({ success: true, message: "Payment verified successfully" });
+        }else{
+            return res.status(400).json({ success: false, message: "Payment not verified" });
+        }
 
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppoinment, listAppointment, cancelAppointment };
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+}
+
+
+
+export { registerUser, loginUser, getProfile, updateProfile, bookAppoinment, listAppointment, cancelAppointment, paymentRazorpay, verifyRazorpay };
