@@ -15,7 +15,7 @@ function LoginSignup() {
       const { name, email, password } = formData;
 
       if (state === "SignUp") {
-        const { data } = await axios.post(backendUrl + "/api/v1/user/register", { withCredentials: true }, {
+        const { data } = await axios.post(backendUrl + "/api/v1/user/register", {
           name,
           email,
           password,
@@ -30,7 +30,7 @@ function LoginSignup() {
           toast.error("Signup failed!");
         }
       } else {
-        const { data } = await axios.post(backendUrl + "/api/v1/user/login", { withCredentials: true }, {
+        const { data } = await axios.post(backendUrl + "/api/v1/user/login",{
           email,
           password,
         });
