@@ -4,6 +4,8 @@ import Doctor from "../Models/doctor.model.js";
 import { cloudinary } from "../Utils/Cloudinary.js";
 import jwt from "jsonwebtoken";
 import Appointment from "../Models/appoinment.model.js";
+import User from "../Models/user.model.js";
+import doctor from "../Models/doctor.model.js";
 
 const addDoctor = async (req, res, next) => {
   try {
@@ -90,15 +92,36 @@ const appointmentAdmin = async (req, res) => {
 };
 
 const appointmentCancel = async (req, res) => {
-    try {
-        const { appointmentId } = req.body;
-        const appointmentData = await Appointment.findById(appointmentId);
-        await Appointment.findByIdAndUpdate(appointmentId, { cancelled: true });
+  try {
+    const { appointmentId } = req.body;
+    const appointmentData = await Appointment.findById(appointmentId);
+    await Appointment.findByIdAndUpdate(appointmentId, { cancelled: true });
 
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Server error", error: error.message });
-    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+  }
 }
 
-export { addDoctor, adminLogin, allDoctors, appointmentAdmin, appointmentCancel };
+const adminDashboard = async (req, res) => {
+  try {
+    const doctors = await doctor.find({});
+    const appointments = await Appointment.find({});
+    const users = await User.find({});
+    const dashData = {
+      doctors: doctors.length,
+      appointments: appointments.length,
+      patients: users.length,
+      latestAppointments: appointments.reverse().slice(0, 5)
+    }
+
+    res.status(200).json({ success: true, dashData });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server error", error: error.message });
+
+  }
+}
+
+export { addDoctor, adminLogin, allDoctors, appointmentAdmin, appointmentCancel, adminDashboard };

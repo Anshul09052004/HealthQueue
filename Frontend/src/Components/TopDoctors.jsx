@@ -56,7 +56,7 @@ function TopDoctors() {
                         navigate("/doctors");
                         window.scrollTo(0, 0);
                     }}
-                    className="px-8 py-3 bg-blue-600 text-white rounded-full font-medium shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300"
+                    className="px-8 py-3 bg-blue-600 cursor-pointer text-white rounded-full font-medium shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all duration-300"
                 >
                     View All Doctors
                 </button>
