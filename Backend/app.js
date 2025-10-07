@@ -9,6 +9,7 @@ import userRoutes from './Routes/user.routes.js';
 const app = express();
 connectDb();
 connectCloudinary();
+app.set('trust proxy', 1);
 
 app.use(express.json());
 app.use(cors({
