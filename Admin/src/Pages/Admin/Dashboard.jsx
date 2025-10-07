@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from 'react';
-import doctoricon from '../../Assets/doctor_icon.svg';
-import appointmenticon from '../../Assets/appointments_icon.svg';
-import patienticon from '../../Assets/patients_icon.svg';
-import listicon from '../../Assets/list_icon.svg';
+import doctoricon from '../../assets/doctor_icon.svg';
+import appointmenticon from '../../assets/appointments_icon.svg';
+import patienticon from '../../assets/patients_icon.svg';
+import listicon from '../../assets/list_icon.svg';
 import { AdminContext } from '../../Context/AdminContext';
 
 function Dashboard() {

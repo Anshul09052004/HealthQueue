@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import axios from 'axios';
 import { AdminContext } from '../Context/AdminContext';
-import { toast } from 'react-toastify';
-
 
 function Login() {
     const { setAToken, backendUrl } = useContext(AdminContext);

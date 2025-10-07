@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { AdminContext } from '../Context/AdminContext'
 import { NavLink } from 'react-router-dom'
-import homeicon from "../Assets/home_icon.svg"
-import appoinmenticon from "../Assets/appointment_icon.svg"
-import addicon from "../Assets/add_icon.svg"
-import peopleicon from "../Assets/people_icon.svg"
+import homeicon from "../assets/home_icon.svg"
+import appoinmenticon from "../assets/appointment_icon.svg"
+import addicon from "../assets/add_icon.svg"
+import peopleicon from "../assets/people_icon.svg"
 
 function Sidebar() {
     const { aToken } = useContext(AdminContext);

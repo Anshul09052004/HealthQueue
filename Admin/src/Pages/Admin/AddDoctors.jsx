@@ -1,4 +1,4 @@
-import uploadarea from "../../Assets/upload_area.svg";
+import uploadarea from "../../assets/upload_area.svg";
 import { useState } from "react";
 import { useContext } from "react";
 import { AdminContext } from "../../Context/AdminContext";
