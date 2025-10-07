@@ -13,9 +13,8 @@ connectCloudinary();
 app.use(express.json());
 app.use(cors({
   origin: [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://10.64.102.239:5173"
+    "https://healthqueue-frontend.onrender.com",
+    "https://healthqueue-admin.onrender.com"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
