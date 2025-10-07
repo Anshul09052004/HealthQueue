@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import adminlogo from '../Assets/admin_logo.svg'
+import adminlogo from '../assets/admin_logo.svg'
 import { AdminContext } from '../Context/AdminContext'
 import { useNavigate } from 'react-router-dom'
 
