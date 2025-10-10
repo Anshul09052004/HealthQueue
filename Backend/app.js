@@ -15,7 +15,9 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "https://healthqueue-frontend.onrender.com",
-    "https://healthqueue-admin.onrender.com"
+    "https://healthqueue-admin.onrender.com",
+     "http://10.22.37.239:5173",
+    "http://localhost:5173"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true

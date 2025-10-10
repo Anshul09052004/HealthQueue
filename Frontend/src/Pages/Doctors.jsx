@@ -32,7 +32,7 @@ function Doctors() {
     "Dermatologist",
     "Pediatrician",
     "Neurologist",
-    "Gastroenterologist",
+    "Gastorenterologist",
   ];
 
   return (
